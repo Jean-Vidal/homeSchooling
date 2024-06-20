@@ -4,7 +4,7 @@ import AppRoutes from "./app.routes"
 import AuthRoutes from "./auth.routes";
 
 function Routes(){
-    const isAuthenticated = false;
+    const isAuthenticated = true;
     const loading = false;
 
     if(loading){

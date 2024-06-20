@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, Button, SafeAreaView, Modal, StyleSheet } from 'react-native';
+import { View, Text, Button, SafeAreaView, Modal, StyleSheet, Alert } from 'react-native';
 import Input from '../../components/Input/Index';
 import DateInput from '../../components/DatePicker';
 import tw from 'twrnc';
+import firestore from '@react-native-firebase/firestore';
 
 function MateriasScreen() {
   const [materia, setMateria] = useState('');
@@ -10,21 +11,21 @@ function MateriasScreen() {
   const [dataInicial, setDataInicial] = useState(new Date());
   const [dataFinal, setDataFinal] = useState(new Date());
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalContent, setModalContent] = useState({
-    materia: '',
-    tema: '',
-    dataInicial: new Date(),
-    dataFinal: new Date(),
-  });
 
-  const handleAdicionar = () => {
-    setModalContent({
-      materia,
-      tema,
-      dataInicial,
-      dataFinal,
-    });
-    setModalVisible(true);
+  const handleAdicionar = async () => {
+    try {
+      await firestore().collection('Materias').add({
+        materia,
+        tema,
+        dataInicial,
+        dataFinal,
+      });
+      setModalVisible(true);
+      Alert.alert('Sucesso', 'Dados salvos com sucesso!');
+    } catch (error) {
+      console.error('Erro ao adicionar matéria:', error);
+      Alert.alert('Erro', 'Erro ao salvar os dados. Por favor, tente novamente.');
+    }
   };
 
   return (
@@ -55,17 +56,17 @@ function MateriasScreen() {
           setModalVisible(!modalVisible);
         }}
       >
-    <View style={styles.modalContainer}>
-      <View style={styles.modalContent}>
-      <Text style={styles.modalText}>Matéria: {modalContent.materia}</Text>
-      <Text style={styles.modalText}>Tema: {modalContent.tema}</Text>
-      <Text style={styles.modalText}>Data Inicial: {modalContent.dataInicial.toLocaleDateString('pt-BR')}</Text>
-      <Text style={styles.modalText}>Data Final: {modalContent.dataFinal.toLocaleDateString('pt-BR')}</Text>
-      <View style={styles.modalButtons}>
-      <Button title="OK" onPress={() => setModalVisible(false)} color="#8B4513" />
-      <Button title="Cancelar" onPress={() => setModalVisible(false)} color="red" />
-      </View>
-    </View>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>Matéria: {materia}</Text>
+            <Text style={styles.modalText}>Tema: {tema}</Text>
+            <Text style={styles.modalText}>Data Inicial: {dataInicial.toLocaleDateString('pt-BR')}</Text>
+            <Text style={styles.modalText}>Data Final: {dataFinal.toLocaleDateString('pt-BR')}</Text>
+            <View style={styles.modalButtons}>
+              <Button title="OK" onPress={() => setModalVisible(false)} color="#8B4513" />
+              <Button title="Cancelar" onPress={() => setModalVisible(false)} color="red" />
+            </View>
+          </View>
         </View>
       </Modal>
     </SafeAreaView>

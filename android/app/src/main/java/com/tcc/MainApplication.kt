@@ -1,4 +1,4 @@
-package com.tcc
+package com.homeschooling.tcc
 
 import android.app.Application
 import com.facebook.react.PackageList
