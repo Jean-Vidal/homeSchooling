@@ -1,50 +1,110 @@
-# Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+# Bem-vindo ao seu aplicativo Expo 👋
 
-## Get started
+Este é um projeto [Expo](https://expo.dev) criado com [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-1. Install dependencies
+## Visão Geral do Projeto
+
+Este projeto visa desenvolver uma solução completa de software para gerenciar atividades de homeschooling. Inclui funcionalidades para planejar estudos, armazenar atividades educacionais e gerar métricas de desempenho para ajudar as famílias a gerenciar a educação domiciliar de forma eficiente.
+
+### Principais Funcionalidades
+- **Autenticação de Usuário**: Autenticação Firebase para login seguro.
+- **Gerenciamento de Atividades**: Componentes para adicionar e gerenciar atividades educacionais, incluindo captura de fotos e upload de documentos.
+- **Métricas de Desempenho**: Dashboard com gráficos de pizza mostrando atividades concluídas e pendentes.
+- **Manipulação de Arquivos**: Importação e exportação de arquivos em diversos formatos.
+- **Compatibilidade Cross-Platform**: Desenvolvido usando React Native, compatível com Android e iOS.
+
+## Como começar
+
+1. Instale as dependências
 
    ```bash
    npm install
    ```
 
-2. Start the app
+2. Inicie o aplicativo
 
    ```bash
-    npx expo start
+   npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+Na saída, você encontrará opções para abrir o aplicativo em um
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- [build de desenvolvimento](https://docs.expo.dev/develop/development-builds/introduction/)
+- [emulador Android](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [simulador iOS](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), um sandbox limitado para experimentar o desenvolvimento de aplicativos com Expo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Você pode começar a desenvolver editando os arquivos dentro do diretório **app**. Este projeto utiliza [roteamento baseado em arquivos](https://docs.expo.dev/router/introduction).
 
-## Get a fresh project
+## Configuração do Firebase
 
-When you're ready, run:
+```javascript
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
+
+const firebaseConfig = {
+  apiKey: "sua-api-key",
+  authDomain: "seu-auth-domain",
+  projectId: "seu-project-id",
+  storageBucket: "seu-storage-bucket",
+  messagingSenderId: "seu-messaging-sender-id",
+  appId: "seu-app-id"
+};
+
+// Inicializa o Firebase
+const app = initializeApp(firebaseConfig);
+
+// Serviços Firebase
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+export { auth, db, storage };
+```
+
+## Funcionalidades do Projeto
+
+### Autenticação
+Implementado usando Firebase Authentication para login seguro.
+
+### Gerenciamento de Atividades
+- **ArmazenarAtividades**: Permite aos usuários tirar fotos e fazer upload de documentos.
+- **Table**: Exibe uma tabela de tarefas com opções para editar e excluir.
+- **Dashboard**: Exibe um gráfico de pizza de tarefas pendentes e concluídas.
+
+### Métricas de Desempenho
+Usa `react-native-chart-kit` para exibir métricas de desempenho em gráficos de pizza.
+
+### Manipulação de Arquivos
+- **react-native-image-picker**: Para capturar fotos.
+- **react-native-document-picker**: Para selecionar documentos.
+
+### Compatibilidade Cross-Platform
+Desenvolvido usando React Native e Expo, garantindo compatibilidade com Android e iOS.
+
+## Obter um projeto novo
+
+Quando estiver pronto, execute:
 
 ```bash
 npm run reset-project
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Este comando moverá o código inicial para o diretório **app-example** e criará um diretório **app** em branco onde você pode começar a desenvolver.
 
-## Learn more
+## Saiba mais
 
-To learn more about developing your project with Expo, look at the following resources:
+Para saber mais sobre o desenvolvimento do seu projeto com Expo, consulte os seguintes recursos:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- [Documentação do Expo](https://docs.expo.dev/): Aprenda os fundamentos ou explore tópicos avançados com nossos [guias](https://docs.expo.dev/guides).
+- [Tutorial do Expo](https://docs.expo.dev/tutorial/introduction/): Siga um tutorial passo a passo onde você criará um projeto que roda em Android, iOS e na web.
 
-## Join the community
+## Junte-se à comunidade
 
-Join our community of developers creating universal apps.
+Junte-se à nossa comunidade de desenvolvedores criando aplicativos universais.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- [Expo no GitHub](https://github.com/expo/expo): Veja nossa plataforma de código aberto e contribua.
+- [Comunidade no Discord](https://chat.expo.dev): Converse com usuários do Expo e tire suas dúvidas.
